@@ -1,3 +1,24 @@
+html {
+    height: 100%;
+}
+
 body {
-    background-color: red;
+    background-color: #CCC;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.container {
+    overflow: hidden;
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+
+.container .container-image {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
 }
