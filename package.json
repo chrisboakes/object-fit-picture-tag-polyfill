@@ -1,8 +1,8 @@
 {
-  "name": "webpack-library-starter",
+  "name": "object-fit-picture-tag-polyfill",
   "version": "0.0.1",
   "description": "Cross browser CSS object-fit support for picture tags",
-  "main": "lib/library.js",
+  "main": "dist/object-fit-picture-tag-polyfill.min.js",
   "scripts": {
     "build": "webpack --env build",
     "dev": "webpack --progress --colors --watch --env dev"
