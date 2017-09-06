@@ -81,8 +81,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -90,13 +94,148 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * Replaces any <picture> tags that have child <img> tags with a div with background attributes
  * @version 0.0.1
  * @author Chris Boakes
+ * @param options Object
+ * @param options - fitPosition String (default 'center center')
  */
-var _class = function _class(options) {
-  _classCallCheck(this, _class);
-};
+var _class = function () {
+    function _class(options) {
+        var _this = this;
+
+        _classCallCheck(this, _class);
+
+        // If we don't have object-fit support
+        if (!this.supportsObjectFit()) {
+            this.combineOptions(options);
+            // By default returns a nodeList - the below ensures it's an array
+            var objectFitCovers = [].slice.call(document.querySelectorAll('[data-object-fit-cover]'));
+
+            var objectFitContains = [].slice.call(document.querySelectorAll('[data-object-fit-contain]'));
+
+            if (objectFitCovers.length > 0) {
+                objectFitCovers.forEach(function (item) {
+                    _this.createReplacementTag(item, 'cover');
+                });
+            }
+
+            if (objectFitContains.length > 0) {
+                objectFitContains.forEach(function (item) {
+                    _this.createReplacementTag(item, 'contain');
+                });
+            }
+        }
+    }
+
+    /**
+     * Loop through array of picture tags and do our fix
+     * @param pictureTag String
+     */
+
+
+    _createClass(_class, [{
+        key: 'createReplacementTag',
+        value: function createReplacementTag(pictureTag, fitSize) {
+            var src = this.getSrc(pictureTag);
+
+            var tagClasses = pictureTag.getAttribute('class');
+
+            var tagId = pictureTag.getAttribute('id');
+
+            // If we have retreived the src attribute
+            if (src) {
+                // Create a new div to wrap our child div
+                var wrapperElement = document.createElement('div');
+
+                // Add IDs and classes from the original picture tag to the new element
+                tagClasses ? wrapperElement.setAttribute('class', tagClasses) : tagClasses = false;
+                tagId ? wrapperElement.setAttribute('id', tagId) : tagId = false;
+                wrapperElement.style.position = 'relative';
+
+                var childElement = document.createElement('div');
+
+                childElement.style.backgroundImage = 'url(' + src + ')';
+                childElement = this.setChildElementStyles(childElement, fitSize);
+                // Add child div to wrapper
+                wrapperElement.appendChild(childElement);
+                // Replace <picture> tag with div
+                pictureTag.parentNode.replaceChild(wrapperElement, pictureTag);
+            }
+        }
+
+        /**
+         * Combine default parameters with user options
+         * @param options Object
+         */
+
+    }, {
+        key: 'combineOptions',
+        value: function combineOptions(options) {
+            var defaults = {
+                fitPosition: 'center center'
+            };
+
+            this.options = _extends({}, defaults, options);
+        }
+
+        /**
+         * Child element styles
+         * @param el DOM Element
+         */
+
+    }, {
+        key: 'setChildElementStyles',
+        value: function setChildElementStyles(el, fitSize) {
+            el.style.backgroundSize = fitSize;
+            el.style.backgroundPosition = this.options.fitPosition;
+            el.style.backgroundRepeat = 'no-repeat';
+            el.style.height = '100%';
+            el.style.width = '100%';
+            el.style.position = 'absolute';
+            el.style.top = '0';
+            el.style.left = '0';
+            return el;
+        }
+
+        /**
+         * Get src from <img> tag
+         * @return String
+         */
+
+    }, {
+        key: 'getSrc',
+        value: function getSrc(item) {
+            var imgTagInsidePicture = item.querySelector('img');
+
+            // <picture> tag
+            if (imgTagInsidePicture && imgTagInsidePicture !== 'undefined' && imgTagInsidePicture !== null) {
+                return imgTagInsidePicture.src;
+                // <img> tag
+            } else if (item.src !== 'undefined' && item.src !== null) {
+                this.options.aspectRatio = item.height / item.width * 100;
+                return item.src;
+            }
+            return false;
+        }
+
+        /**
+         * Detect whether we support object fit
+         * @return Boolean
+         */
+
+    }, {
+        key: 'supportsObjectFit',
+        value: function supportsObjectFit() {
+            var testImg = typeof Image === 'undefined' ? { style: { 'object-position': 1 } } : new Image();
+            var supportsFit = 'object-fit' in testImg.style;
+
+            return supportsFit;
+        }
+    }]);
+
+    return _class;
+}();
 
 exports.default = _class;
-module.exports = exports["default"];
+module.exports = exports['default'];
 
 /***/ })
 /******/ ]);
