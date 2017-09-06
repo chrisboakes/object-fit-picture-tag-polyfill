@@ -91,7 +91,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Replaces any <picture> tags that have child <img> tags with a div with background attributes
+ * Cross browser CSS object-fit support for picture tags and img tags
+ * DOM element must have either data-object-fit-cover or data-object-fit-contain assigned to the tag
+ * Replaces tag with two divs - a parent with relative positioning and a child with a background image
  * @version 0.0.1
  * @author Chris Boakes
  * @param options Object
@@ -126,12 +128,27 @@ var _class = function () {
     }
 
     /**
-     * Loop through array of picture tags and do our fix
-     * @param pictureTag String
+     * Combine default parameters with user options
+     * @param options Object
      */
 
 
     _createClass(_class, [{
+        key: 'combineOptions',
+        value: function combineOptions(options) {
+            var defaults = {
+                fitPosition: 'center center'
+            };
+
+            this.options = _extends({}, defaults, options);
+        }
+
+        /**
+         * Loop through array of picture tags and do our fix
+         * @param pictureTag String
+         */
+
+    }, {
         key: 'createReplacementTag',
         value: function createReplacementTag(pictureTag, fitSize) {
             var src = this.getSrc(pictureTag);
@@ -159,21 +176,6 @@ var _class = function () {
                 // Replace <picture> tag with div
                 pictureTag.parentNode.replaceChild(wrapperElement, pictureTag);
             }
-        }
-
-        /**
-         * Combine default parameters with user options
-         * @param options Object
-         */
-
-    }, {
-        key: 'combineOptions',
-        value: function combineOptions(options) {
-            var defaults = {
-                fitPosition: 'center center'
-            };
-
-            this.options = _extends({}, defaults, options);
         }
 
         /**
