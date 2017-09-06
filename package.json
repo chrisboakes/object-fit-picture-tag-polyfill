@@ -1,0 +1,44 @@
+{
+  "name": "webpack-library-starter",
+  "version": "0.0.1",
+  "description": "Cross browser CSS object-fit support for picture tags",
+  "main": "lib/library.js",
+  "scripts": {
+    "build": "webpack --env build",
+    "dev": "webpack --progress --colors --watch --env dev",
+    "test": "mocha --compilers js:babel-core/register --colors ./tests/*.spec.js",
+    "test:watch": "mocha --compilers js:babel-core/register --colors -w ./tests/*.spec.js"
+  },
+  "devDependencies": {
+    "babel-cli": "6.24.1",
+    "babel-core": "6.24.1",
+    "babel-eslint": "7.2.3",
+    "babel-loader": "7.0.0",
+    "babel-plugin-add-module-exports": "0.2.1",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "chai": "3.5.0",
+    "eslint": "3.19.0",
+    "eslint-loader": "1.7.1",
+    "mocha": "3.3.0",
+    "webpack": "3.1.0",
+    "yargs": "7.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrisboakes/object-fit-picture-tag-polyfill.git"
+  },
+  "keywords": [
+    "object-fit",
+    "es6",
+    "polyfill",
+    "library",
+    "picture-tag"
+  ],
+  "author": "Chris Boakes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chrisboakes/object-fit-picture-tag-polyfill/issues"
+  },
+  "homepage": "https://github.com/chrisboakes/object-fit-picture-tag-polyfill"
+}
