@@ -6,6 +6,7 @@
  * @author Chris Boakes
  * @param options Object
  * @param options - fitPosition String (default 'center center')
+ * @param options - addContainer Boolean - do we want a 'relative' wrapper?
  */
 export default class {
     constructor(options) {
@@ -37,7 +38,8 @@ export default class {
      */
     combineOptions(options) {
         let defaults = {
-            fitPosition: 'center center'
+            fitPosition: 'center center',
+            addContainer: true
         };
 
         this.options = {
@@ -59,30 +61,87 @@ export default class {
 
         // If we have retreived the src attribute
         if (src) {
-            // Create a new div to wrap our child div
-            let wrapperElement = document.createElement('div');
+            let backgroundElement = this.createBackground(src, tagClasses, tagId, fitSize);
 
-            // Add IDs and classes from the original picture tag to the new element
-            tagClasses ? wrapperElement.setAttribute('class', tagClasses) : tagClasses = false;
-            tagId ? wrapperElement.setAttribute('id', tagId) : tagId = false;
-            wrapperElement.style.position = 'relative';
+            // If we want a wrapping div
+            if (this.options.addContainer) {
+                // Create a new div to wrap our child div
+                let wrapperElement = this.createBackgroundContainer(tagClasses, tagId);
 
-            let childElement = document.createElement('div');
-
-            childElement.style.backgroundImage = `url(${src})`;
-            childElement = this.setChildElementStyles(childElement, fitSize);
-            // Add child div to wrapper
-            wrapperElement.appendChild(childElement);
-            // Replace <picture> tag with div
-            pictureTag.parentNode.replaceChild(wrapperElement, pictureTag);
+                // Add child div to wrapper
+                wrapperElement.appendChild(backgroundElement);
+                // Replace <picture> tag with div
+                pictureTag.parentNode.replaceChild(wrapperElement, pictureTag);
+            // If we don't have a wrapping div
+            } else {
+                // Replace <picture> tag with div
+                pictureTag.parentNode.replaceChild(backgroundElement, pictureTag);
+            }
         }
+    }
+
+    /**
+     * Creates a new wrapper div for our background-image container
+     * @param tagClasses String
+     * @param tagId String
+     * @return DOM element
+     */
+    createBackgroundContainer(tagClasses, tagId) {
+        // Create a new div to wrap our child div
+        let wrapperElement = document.createElement('div');
+
+        // Add IDs and classes from the original picture tag to the new element
+        wrapperElement = this.setClassesAndIds(wrapperElement, tagClasses, tagId);
+        wrapperElement.style.position = 'relative';
+
+        return wrapperElement;
+    }
+
+    /**
+     * Our background-image container
+     * @param src String
+     * @param tagClasses String
+     * @param tagId String
+     * @param fitSize String
+     * @return DOM element
+     */
+    createBackground(src, tagClasses, tagId, fitSize) {
+        let backgroundElement = document.createElement('div');
+
+        backgroundElement.style.backgroundImage = `url(${src})`;
+        backgroundElement = this.setBackgroundElementStyles(backgroundElement, fitSize);
+
+        if (!this.options.addContainer) {
+            backgroundElement = this.setClassesAndIds(backgroundElement, tagClasses, tagId);
+        }
+
+        return backgroundElement;
+    }
+
+    /**
+     * Append DOM element with Id and classes (if on original element)
+     * @param el DOM element
+     * @param tagClasses String
+     * @param tagId String
+     * @return DOM element
+     */
+    setClassesAndIds(el, tagClasses, tagId) {
+        if (tagClasses) {
+            el.setAttribute('class', tagClasses);
+        }
+
+        if (tagId) {
+            el.setAttribute('id', tagId);
+        }
+
+        return el;
     }
 
     /**
      * Child element styles
      * @param el DOM Element
      */
-    setChildElementStyles(el, fitSize) {
+    setBackgroundElementStyles(el, fitSize) {
         el.style.backgroundSize = fitSize;
         el.style.backgroundPosition = this.options.fitPosition;
         el.style.backgroundRepeat = 'no-repeat';
@@ -96,6 +155,7 @@ export default class {
 
     /**
      * Get src from <img> tag
+     * @param item String
      * @return String
      */
     getSrc(item) {
