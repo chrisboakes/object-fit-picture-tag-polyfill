@@ -1,6 +1,6 @@
 {
   "name": "object-fit-picture-tag-polyfill",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Cross browser CSS object-fit support for picture tags",
   "main": "dist/object-fit-picture-tag-polyfill.min.js",
   "scripts": {
