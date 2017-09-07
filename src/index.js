@@ -2,7 +2,6 @@
  * Cross browser CSS object-fit support for picture tags and img tags
  * DOM element must have either data-object-fit-cover or data-object-fit-contain assigned to the tag
  * Replaces tag with two divs - a parent with relative positioning and a child with a background image
- * @version 0.0.1
  * @author Chris Boakes
  * @param options Object
  * @param options - fitPosition String (default 'center center')
