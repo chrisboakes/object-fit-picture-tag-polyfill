@@ -1,1 +1,341 @@
-!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define("object-fit-picture-tag-polyfill",[],t):"object"==typeof exports?exports["object-fit-picture-tag-polyfill"]=t():e["object-fit-picture-tag-polyfill"]=t()}(this,function(){return function(e){function t(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var n={};return t.m=e,t.c=n,t.d=function(e,n,r){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:r})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=1)}([function(e,t,n){"use strict";function r(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0});var o=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},i=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),a=function(){function e(t){var n=this;if(r(this,e),!this.supportsObjectFit()){this.combineOptions(t);var o=[].slice.call(document.querySelectorAll("[data-object-fit-cover]")),i=[].slice.call(document.querySelectorAll("[data-object-fit-contain]"));o.length>0&&o.forEach(function(e){n.createReplacementTag(e,"cover")}),i.length>0&&i.forEach(function(e){n.createReplacementTag(e,"contain")})}}return i(e,[{key:"combineOptions",value:function(e){var t={fitPosition:"center center",addContainer:!0};this.options=o({},t,e)}},{key:"createReplacementTag",value:function(e,t){var n=this.getSrc(e),r=e.getAttribute("class"),o=e.getAttribute("id");if(n){var i=this.createBackground(n,r,o,t);if(this.options.addContainer){var a=this.createBackgroundContainer(r,o);a.appendChild(i),e.parentNode.replaceChild(a,e)}else e.parentNode.replaceChild(i,e)}}},{key:"createBackgroundContainer",value:function(e,t){var n=document.createElement("div");return n=this.setClassesAndIds(n,e,t),n.style.position="relative",n}},{key:"createBackground",value:function(e,t,n,r){var o=document.createElement("div");return o.style.backgroundImage="url("+e+")",o=this.setBackgroundElementStyles(o,r),this.options.addContainer||(o=this.setClassesAndIds(o,t,n)),o}},{key:"setClassesAndIds",value:function(e,t,n){return t&&e.setAttribute("class",t),n&&e.setAttribute("id",n),e}},{key:"setBackgroundElementStyles",value:function(e,t){return e.style.backgroundSize=t,e.style.backgroundPosition=this.options.fitPosition,e.style.backgroundRepeat="no-repeat",e.style.height="100%",e.style.width="100%",e.style.position="absolute",e.style.top="0",e.style.left="0",e}},{key:"getSrc",value:function(e){var t=e.querySelector("img");return t&&"undefined"!==t&&null!==t?t.src:"undefined"!==e.src&&null!==e.src&&(this.options.aspectRatio=e.height/e.width*100,e.src)}},{key:"supportsObjectFit",value:function(){return"object-fit"in("undefined"==typeof Image?{style:{"object-position":1}}:new Image).style}}]),e}();t.default=a,e.exports=t.default},function(e,t,n){"use strict";var r=n(0);new(function(e){return e&&e.__esModule?e:{default:e}}(r).default)}])});
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("object-fit-picture-tag-polyfill", [], factory);
+	else if(typeof exports === 'object')
+		exports["object-fit-picture-tag-polyfill"] = factory();
+	else
+		root["object-fit-picture-tag-polyfill"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Cross browser CSS object-fit support for picture tags and img tags
+ * DOM element must have either data-object-fit-cover or data-object-fit-contain assigned to the tag
+ * Replaces tag with two divs - a parent with relative positioning and a child with a background image
+ * @author Chris Boakes
+ * @param options Object
+ * @param options - fitPosition String (default 'center center')
+ * @param options - addContainer Boolean - do we want a 'relative' wrapper?
+ */
+var _class = function () {
+    function _class(options) {
+        _classCallCheck(this, _class);
+
+        // If we don't have object-fit support
+        if (!this.supportsObjectFit()) {
+            this.combineOptions(options);
+            this.init();
+        }
+    }
+
+    /**
+     * Combine default parameters with user options
+     * @param options Object
+     */
+
+
+    _createClass(_class, [{
+        key: 'combineOptions',
+        value: function combineOptions(options) {
+            var defaults = {
+                fitPosition: 'center center',
+                addContainer: true
+            };
+
+            this.options = _extends({}, defaults, options);
+        }
+
+        /**
+         * Initialise app
+         */
+
+    }, {
+        key: 'init',
+        value: function init() {
+            // By default returns a nodeList - the below ensures it's an array
+            this.initReplacementTags([].slice.call(document.querySelectorAll('[data-object-fit-cover]')), 'cover');
+            this.initReplacementTags([].slice.call(document.querySelectorAll('[data-object-fit-contain]')), 'contain');
+        }
+
+        /**
+         * Loop through object-fit-covers and object-fit-contains
+         * @param tags Array
+         * @param fitSize String
+         */
+
+    }, {
+        key: 'initReplacementTags',
+        value: function initReplacementTags(tags, fitSize) {
+            var _this = this;
+
+            if (tags.length > 0) {
+                tags.forEach(function (item) {
+                    _this.createReplacementTag(item, fitSize);
+                });
+            }
+        }
+
+        /**
+         * Loop through array of picture tags and do our fix
+         * @param pictureTag String
+         * @param fitSize String
+         */
+
+    }, {
+        key: 'createReplacementTag',
+        value: function createReplacementTag(pictureTag, fitSize) {
+            var src = this.getSrc(pictureTag);
+
+            var tagClasses = pictureTag.getAttribute('class');
+
+            var tagId = pictureTag.getAttribute('id');
+
+            // If we have retreived the src attribute
+            if (src) {
+                var backgroundElement = this.createBackground(src, tagClasses, tagId, fitSize);
+
+                // If we want a wrapping div
+                if (this.options.addContainer) {
+                    // Create a new div to wrap our child div
+                    var wrapperElement = this.createBackgroundContainer(tagClasses, tagId);
+
+                    // Add child div to wrapper
+                    wrapperElement.appendChild(backgroundElement);
+                    // Replace <picture> tag with div
+                    pictureTag.parentNode.replaceChild(wrapperElement, pictureTag);
+                    // If we don't have a wrapping div
+                } else {
+                    // Replace <picture> tag with div
+                    pictureTag.parentNode.replaceChild(backgroundElement, pictureTag);
+                }
+            }
+        }
+
+        /**
+         * Creates a new wrapper div for our background-image container
+         * @param tagClasses String
+         * @param tagId String
+         * @return DOM element
+         */
+
+    }, {
+        key: 'createBackgroundContainer',
+        value: function createBackgroundContainer(tagClasses, tagId) {
+            // Create a new div to wrap our child div
+            var wrapperElement = document.createElement('div');
+
+            // Add IDs and classes from the original picture tag to the new element
+            wrapperElement = this.setClassesAndIds(wrapperElement, tagClasses, tagId);
+            wrapperElement.style.position = 'relative';
+
+            return wrapperElement;
+        }
+
+        /**
+         * Our background-image container
+         * @param src String
+         * @param tagClasses String
+         * @param tagId String
+         * @param fitSize String
+         * @return DOM element
+         */
+
+    }, {
+        key: 'createBackground',
+        value: function createBackground(src, tagClasses, tagId, fitSize) {
+            var backgroundElement = document.createElement('div');
+
+            backgroundElement.style.backgroundImage = 'url(' + src + ')';
+            backgroundElement = this.setBackgroundElementStyles(backgroundElement, fitSize);
+
+            if (!this.options.addContainer) {
+                backgroundElement = this.setClassesAndIds(backgroundElement, tagClasses, tagId);
+            }
+
+            return backgroundElement;
+        }
+
+        /**
+         * Append DOM element with Id and classes (if on original element)
+         * @param el DOM element
+         * @param tagClasses String
+         * @param tagId String
+         * @return DOM element
+         */
+
+    }, {
+        key: 'setClassesAndIds',
+        value: function setClassesAndIds(el, tagClasses, tagId) {
+            if (tagClasses) {
+                el.setAttribute('class', tagClasses);
+            }
+
+            if (tagId) {
+                el.setAttribute('id', tagId);
+            }
+
+            return el;
+        }
+
+        /**
+         * Child element styles
+         * @param el DOM Element
+         */
+
+    }, {
+        key: 'setBackgroundElementStyles',
+        value: function setBackgroundElementStyles(el, fitSize) {
+            el.style.backgroundSize = fitSize;
+            el.style.backgroundPosition = this.options.fitPosition;
+            el.style.backgroundRepeat = 'no-repeat';
+            el.style.height = '100%';
+            el.style.width = '100%';
+            el.style.position = 'absolute';
+            el.style.top = '0';
+            el.style.left = '0';
+            return el;
+        }
+
+        /**
+         * Get src from <img> tag
+         * @param item String
+         * @return String
+         */
+
+    }, {
+        key: 'getSrc',
+        value: function getSrc(item) {
+            var imgTagInsidePicture = item.querySelector('img');
+
+            // <picture> tag
+            if (imgTagInsidePicture && imgTagInsidePicture !== 'undefined' && imgTagInsidePicture !== null) {
+                return imgTagInsidePicture.src;
+                // <img> tag
+            } else if (item.src !== 'undefined' && item.src !== null) {
+                this.options.aspectRatio = item.height / item.width * 100;
+                return item.src;
+            }
+            return false;
+        }
+
+        /**
+         * Detect whether we support object fit
+         * @return Boolean
+         */
+
+    }, {
+        key: 'supportsObjectFit',
+        value: function supportsObjectFit() {
+            var testImg = typeof Image === 'undefined' ? { style: { 'object-position': 1 } } : new Image();
+            var supportsFit = 'object-fit' in testImg.style;
+
+            return supportsFit;
+        }
+    }]);
+
+    return _class;
+}();
+
+exports.default = _class;
+module.exports = exports['default'];
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _index = __webpack_require__(0);
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+new _index2.default(); // eslint-disable-line no-new
+
+/***/ })
+/******/ ]);
+});
