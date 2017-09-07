@@ -8,7 +8,7 @@
 
 - Fast and lightweight
 - No framework dependencies
-- Works with both <picture> and <img> tags
+- Works with both ```<picture>``` and ```<img>``` tags
 
 ## Installation
 However you like:
@@ -21,7 +21,7 @@ npm install --save object-fit-picture-tag-polyfill
 ```
 
 ## Usage
-1. Append your <picture> tags with either ```data-object-fit-cover``` or ```data-object-fit-contain```
+1. Append your ```<picture>``` tags with either ```data-object-fit-cover``` or ```data-object-fit-contain```
 
 2. Import the plugin
     ```js
@@ -35,7 +35,7 @@ npm install --save object-fit-picture-tag-polyfill
     ```
 
 ## Parameters
-### `(fitPosition)`
+### `(fitPosition, addContainer)`
 
 <table>
     <tr>
@@ -48,6 +48,14 @@ npm install --save object-fit-picture-tag-polyfill
             Type: <code>string</code><br>
             Default: <code>'center center'</code><br><br>
             The background-position of background-image
+        </td>
+    </tr>
+    <tr>
+        <th><code>addContainer</code></th>
+        <td>
+            Type: <code>boolean</code><br>
+            Default: <code>true</code><br><br>
+            If set to true, the div which has your background-image will be wrapped in a parent div with relative positioning. The parent div will keep the class and id of your picture tag. If set to false, there will be no wrapping div and your background-image div will keep the class and id of your picture tag.
         </td>
     </tr>
 </table>
