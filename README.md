@@ -33,6 +33,12 @@ npm install --save object-fit-picture-tag-polyfill
             fitPosition: 'center center'
         });
     ```
+4. (optional) if you want to reinitialise the script you can call the ```init()``` method directly (after the class has been initialised)
+    ```js
+        let polyfill = new objectFitPolyfill();
+
+        polyfill.init();
+    ```
 
 ## Parameters
 ### `(fitPosition, addContainer)`

@@ -94,7 +94,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * Cross browser CSS object-fit support for picture tags and img tags
  * DOM element must have either data-object-fit-cover or data-object-fit-contain assigned to the tag
  * Replaces tag with two divs - a parent with relative positioning and a child with a background image
- * @version 0.0.1
  * @author Chris Boakes
  * @param options Object
  * @param options - fitPosition String (default 'center center')
@@ -102,29 +101,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  */
 var _class = function () {
     function _class(options) {
-        var _this = this;
-
         _classCallCheck(this, _class);
 
         // If we don't have object-fit support
         if (!this.supportsObjectFit()) {
             this.combineOptions(options);
-            // By default returns a nodeList - the below ensures it's an array
-            var objectFitCovers = [].slice.call(document.querySelectorAll('[data-object-fit-cover]'));
-
-            var objectFitContains = [].slice.call(document.querySelectorAll('[data-object-fit-contain]'));
-
-            if (objectFitCovers.length > 0) {
-                objectFitCovers.forEach(function (item) {
-                    _this.createReplacementTag(item, 'cover');
-                });
-            }
-
-            if (objectFitContains.length > 0) {
-                objectFitContains.forEach(function (item) {
-                    _this.createReplacementTag(item, 'contain');
-                });
-            }
+            this.init();
         }
     }
 
@@ -146,8 +128,39 @@ var _class = function () {
         }
 
         /**
+         * Initialise app
+         */
+
+    }, {
+        key: 'init',
+        value: function init() {
+            // By default returns a nodeList - the below ensures it's an array
+            this.initReplacementTags([].slice.call(document.querySelectorAll('[data-object-fit-cover]')), 'cover');
+            this.initReplacementTags([].slice.call(document.querySelectorAll('[data-object-fit-contain]')), 'contain');
+        }
+
+        /**
+         * Loop through object-fit-covers and object-fit-contains
+         * @param tags Array
+         * @param fitSize String
+         */
+
+    }, {
+        key: 'initReplacementTags',
+        value: function initReplacementTags(tags, fitSize) {
+            var _this = this;
+
+            if (tags.length > 0) {
+                tags.forEach(function (item) {
+                    _this.createReplacementTag(item, fitSize);
+                });
+            }
+        }
+
+        /**
          * Loop through array of picture tags and do our fix
          * @param pictureTag String
+         * @param fitSize String
          */
 
     }, {

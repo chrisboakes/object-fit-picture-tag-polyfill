@@ -12,22 +12,7 @@ export default class {
         // If we don't have object-fit support
         if (!this.supportsObjectFit()) {
             this.combineOptions(options);
-            // By default returns a nodeList - the below ensures it's an array
-            let objectFitCovers = [].slice.call(document.querySelectorAll('[data-object-fit-cover]'));
-
-            let objectFitContains = [].slice.call(document.querySelectorAll('[data-object-fit-contain]'));
-
-            if (objectFitCovers.length > 0) {
-                objectFitCovers.forEach((item) => {
-                    this.createReplacementTag(item, 'cover');
-                });
-            }
-
-            if (objectFitContains.length > 0) {
-                objectFitContains.forEach((item) => {
-                    this.createReplacementTag(item, 'contain');
-                });
-            }
+            this.init();
         }
     }
 
@@ -48,8 +33,31 @@ export default class {
     }
 
     /**
+     * Initialise app
+     */
+    init() {
+        // By default returns a nodeList - the below ensures it's an array
+        this.initReplacementTags([].slice.call(document.querySelectorAll('[data-object-fit-cover]')), 'cover');
+        this.initReplacementTags([].slice.call(document.querySelectorAll('[data-object-fit-contain]')), 'contain');
+    }
+
+    /**
+     * Loop through object-fit-covers and object-fit-contains
+     * @param tags Array
+     * @param fitSize String
+     */
+    initReplacementTags(tags, fitSize) {
+        if (tags.length > 0) {
+            tags.forEach((item) => {
+                this.createReplacementTag(item, fitSize);
+            });
+        }
+    }
+
+    /**
      * Loop through array of picture tags and do our fix
      * @param pictureTag String
+     * @param fitSize String
      */
     createReplacementTag(pictureTag, fitSize) {
         let src = this.getSrc(pictureTag);
